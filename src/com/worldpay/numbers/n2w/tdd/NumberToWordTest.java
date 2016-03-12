@@ -17,12 +17,36 @@ public class NumberToWordTest {
 		assertEquals("eight", w);
 	}
 	
-	@Test(expected = ArrayIndexOutOfBoundsException.class)
-	public void shouldThrowExceptionIfTwentyOrGrater() throws Exception {
-		int n = 23;
+	@Test
+	public void shouldConvertTensAndUnitsToWords() throws Exception {
+		int n = 72;
 		String w = NumberToWord.getNumberAsWords(n);
 		
-		assertEquals("twenty three", w);
+		assertEquals("seventy two", w);
+	}
+
+	@Test
+	public void shouldConvertFullTensToWords() throws Exception {
+		int n = 90;
+		String w = NumberToWord.getNumberAsWords(n);
+		
+		assertEquals("ninety", w);
+	}
+	
+	@Test
+	public void shouldConvertZeroToWord() throws Exception {
+		int n = 0;
+		String w = NumberToWord.getNumberAsWords(n);
+		
+		assertEquals("zero", w);
+	}
+	
+	@Test
+	public void shouldIgnoreFullHundredsAndAboveForNow() throws Exception {
+		int n = 1399;
+		String w = NumberToWord.getNumberAsWords(n);
+		
+		assertEquals("ninety nine", w);
 	}
 	
 	@Test(expected = UnsupportedNegativeNumberException.class)
