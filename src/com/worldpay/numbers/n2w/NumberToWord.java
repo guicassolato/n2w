@@ -1,5 +1,7 @@
 package com.worldpay.numbers.n2w;
 
+import com.worldpay.numbers.exceptions.*;
+
 public class NumberToWord {
 	
 	private static final String[] SIMPLE_NAMED_NUMBERS = {
@@ -29,7 +31,9 @@ public class NumberToWord {
 		return SIMPLE_NAMED_NUMBERS[n];
 	};
 	
-	public static String getNumberAsWords(int n) {
+	public static String getNumberAsWords(int n) throws Exception {
+		if (n < 0) throw new UnsupportedNegativeNumberException();
+		
 		return getSimpleNamedNumberAsWord(n);
 	}
 
