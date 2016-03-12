@@ -15,5 +15,13 @@ public class NumberToWordTest {
 		
 		assertEquals("eight", w);
 	}
+	
+	@Test(expected = ArrayIndexOutOfBoundsException.class)
+	public void shouldThrowExceptionIfTwentyOrGrater() throws Exception {
+		int n = 23;
+		String w = NumberToWord.getNumberAsWords(n);
+		
+		assertEquals("twenty three", w);
+	}
 
 }
