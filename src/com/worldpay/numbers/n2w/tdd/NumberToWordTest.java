@@ -32,5 +32,13 @@ public class NumberToWordTest {
 		
 		assertEquals("forty", w);
 	}
+	
+	@Test(expected = UnsupportedBigNumberException.class)
+	public void shouldThrowExceptionIfTooBig() throws Exception {
+		int n = 1200300400;
+		String w = NumberToWord.getNumberAsWords(n);
+		
+		assertEquals("one billion two hundred million three hundred thousand four hundred", w);
+	}
 
 }

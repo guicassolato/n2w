@@ -33,6 +33,7 @@ public class NumberToWord {
 	
 	public static String getNumberAsWords(int n) throws Exception {
 		if (n < 0) throw new UnsupportedNegativeNumberException();
+		if (n > 999999999) throw new UnsupportedBigNumberException();
 		
 		return getSimpleNamedNumberAsWord(n);
 	}
