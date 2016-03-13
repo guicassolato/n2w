@@ -56,15 +56,24 @@ public class NumberToWordTest {
 	}
 	
 	/*
-	 * Tests lack of support for hundreds and above for now
-	 * Although, it should still convert the tens and units portion
+	 * Tests conversion of hundreds
 	 */
 	@Test
-	public void shouldIgnoreFullHundredsAndAboveForNow() throws Exception {
+	public void shouldConvertHundredsToWords() throws Exception {
 		int n = 105;
 		String w = NumberToWord.getNumberAsWords(n);
 		
-		assertEquals("five", w);
+		assertEquals("one hundred and five", w);
+		
+		n = 123;
+		w = NumberToWord.getNumberAsWords(n);
+		
+		assertEquals("one hundred and twenty three", w);
+		
+		n = 500;
+		w = NumberToWord.getNumberAsWords(n);
+		
+		assertEquals("five hundred", w);
 	}
 	
 	// ============================== Exceptions tests

@@ -68,6 +68,11 @@ public class NumberToWord {
 	};
 	
 	/*
+	 * String constants to the English words for hundreds
+	 */
+	private static final String HUNDRED = "hundred";
+	
+	/*
 	 * The main static method to convert any integer non-negative number from
 	 * 0 to 999,999,999 to its corresponding English name. 
 	 */
@@ -78,11 +83,20 @@ public class NumberToWord {
 		if (n < 20) {
 			return getSimpleNamedNumberAsWord(n);
 		} else {
-			int tensPortion = n % 100;
+			int hundredsPortion = n % 1000;
+			
+			int hundreds = hundredsPortion / 100;
+			int tensPortion = hundredsPortion % 100;
+			
 			int tens = tensPortion / 10;
 			int units = tensPortion % 10;
 			
 			ArrayList<String> parts = new ArrayList<String>();
+			if (hundreds > 0) {
+				parts.add(getSimpleNamedNumberAsWord(hundreds));
+				parts.add(HUNDRED);
+				if (tensPortion > 0) parts.add("and");
+			}
 			if (tens >= 2) parts.add(getTensAsWord(tens));
 			if (units > 0) parts.add(getSimpleNamedNumberAsWord(units));
 			
