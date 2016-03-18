@@ -76,6 +76,42 @@ public class NumberToWordTest {
 		assertEquals("five hundred", w);
 	}
 	
+	/*
+	 * Test conversion of thousands
+	 */
+	@Test
+	public void shouldConvertThousandsToWords() throws Exception {
+		int n = 1005;
+		String w = NumberToWord.getNumberAsWords(n);
+		
+		assertEquals("one thousand and five", w);
+		
+		n = 1042;
+		w = NumberToWord.getNumberAsWords(n);
+		
+		assertEquals("one thousand and forty two", w);
+		
+		n = 1105;
+		w = NumberToWord.getNumberAsWords(n);
+		
+		assertEquals("one thousand one hundred and five", w);
+		
+		n = 566340;
+		w = NumberToWord.getNumberAsWords(n);
+		
+		assertEquals("five hundred and sixty six thousand three hundred and forty", w);
+		
+		n = 900000;
+		w = NumberToWord.getNumberAsWords(n);
+		
+		assertEquals("nine hundred thousand", w);
+		
+		n = 900007;
+		w = NumberToWord.getNumberAsWords(n);
+		
+		assertEquals("nine hundred thousand and seven", w);
+	}
+	
 	// ============================== Exceptions tests
 	
 	/*

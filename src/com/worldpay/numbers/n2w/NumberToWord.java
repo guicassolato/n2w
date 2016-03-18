@@ -35,7 +35,7 @@ public class NumberToWord {
 	
 	/*
 	 * Getter method to obtain a "simple named number" as a word
-	 * from within the corresponding constant array.
+	 * from the corresponding constant array.
 	 */
 	private static String getSimpleNamedNumberAsWord(int n) {
 		return SIMPLE_NAMED_NUMBERS[n];
@@ -68,9 +68,41 @@ public class NumberToWord {
 	};
 	
 	/*
-	 * String constants to the English words for hundreds
+	 * String constant for the humanized version of the word "and" (the separator)
+	 */
+	private static final String AND = "and";
+	
+	/*
+	 * String constant for the humanized version of the word "hundred"
 	 */
 	private static final String HUNDRED = "hundred";
+	
+	/*
+	 * Converts hundreds
+	 */
+	private static String getHundredsAsWords(int n) throws Exception {
+		int hundreds = n / 100;
+		int tensPortion = n % 100;
+		
+		int tens = tensPortion / 10;
+		int units = tensPortion % 10;
+		
+		ArrayList<String> parts = new ArrayList<String>();
+		if (hundreds > 0) {
+			parts.add(getSimpleNamedNumberAsWord(hundreds));
+			parts.add(HUNDRED);
+			if (tensPortion > 0) parts.add(AND);
+		}
+		if (tens >= 2) parts.add(getTensAsWord(tens));
+		if (units > 0) parts.add(getSimpleNamedNumberAsWord(units));
+		
+		return String.join(" ", parts);
+	}
+	
+	/*
+	 * String constant to the English word for thousands
+	 */
+	private static final String THOUSAND = "thousand";
 	
 	/*
 	 * The main static method to convert any integer non-negative number from
@@ -83,26 +115,24 @@ public class NumberToWord {
 		if (n < 20) {
 			return getSimpleNamedNumberAsWord(n);
 		} else {
-			int hundredsPortion = n % 1000;
+			int thousandsPortion = n % 1000000;
 			
-			int hundreds = hundredsPortion / 100;
-			int tensPortion = hundredsPortion % 100;
-			
-			int tens = tensPortion / 10;
-			int units = tensPortion % 10;
+			int thousands = thousandsPortion / 1000;
+			int hundredsPortion = thousandsPortion % 1000;
 			
 			ArrayList<String> parts = new ArrayList<String>();
-			if (hundreds > 0) {
-				parts.add(getSimpleNamedNumberAsWord(hundreds));
-				parts.add(HUNDRED);
-				if (tensPortion > 0) parts.add("and");
+			if (thousands > 0) {
+				parts.add(getHundredsAsWords(thousands));
+				parts.add(THOUSAND);
+				if (hundredsPortion > 0 && hundredsPortion < 100)
+					parts.add(AND);
 			}
-			if (tens >= 2) parts.add(getTensAsWord(tens));
-			if (units > 0) parts.add(getSimpleNamedNumberAsWord(units));
+			if (hundredsPortion > 0)
+				parts.add(getHundredsAsWords(hundredsPortion));
 			
 			return String.join(" ", parts);
 			
-			// TODO: Improve to support hundreds, thousands and millions
+			// TODO: Improve to support millions
 		}		
 	}
 
