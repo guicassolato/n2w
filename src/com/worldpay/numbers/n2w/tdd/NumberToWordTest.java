@@ -112,6 +112,42 @@ public class NumberToWordTest {
 		assertEquals("nine hundred thousand and seven", w);
 	}
 	
+	/*
+	 * Test conversion of millions
+	 */
+	@Test
+	public void shouldConvertMillionsToWords() throws Exception {
+		int n = 56945781;
+		String w = NumberToWord.getNumberAsWords(n);
+		
+		assertEquals("fifty six million nine hundred and forty five thousand seven hundred and eighty one", w);
+		
+		n = 999999999;
+		w = NumberToWord.getNumberAsWords(n);
+		
+		assertEquals("nine hundred and ninety nine million nine hundred and ninety nine thousand nine hundred and ninety nine", w);
+		
+		n = 3000000;
+		w = NumberToWord.getNumberAsWords(n);
+		
+		assertEquals("three million", w);
+
+		n = 3000004;
+		w = NumberToWord.getNumberAsWords(n);
+		
+		assertEquals("three million and four", w);
+		
+		n = 3000017;
+		w = NumberToWord.getNumberAsWords(n);
+		
+		assertEquals("three million and seventeen", w);
+		
+		n = 3000033;
+		w = NumberToWord.getNumberAsWords(n);
+		
+		assertEquals("three million and thirty three", w);
+	}
+	
 	// ============================== Exceptions tests
 	
 	/*
