@@ -109,9 +109,10 @@ public class NumberToWord {
 			if (tensPortion < 20) {
 				parts.add(getSimpleNamedNumberAsWord(tensPortion));
 			} else {
-				parts.add(getTensAsWord(tens));
 				if (units > 0)
-					parts.add(getSimpleNamedNumberAsWord(units));
+					parts.add(String.format("%s-%s", getTensAsWord(tens), getSimpleNamedNumberAsWord(units)));
+				else
+					parts.add(getTensAsWord(tens));
 			}
 		}
 		

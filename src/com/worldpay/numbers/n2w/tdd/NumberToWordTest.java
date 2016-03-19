@@ -40,7 +40,7 @@ public class NumberToWordTest {
 		int n = 21;
 		String w = NumberToWord.getNumberAsWords(n);
 		
-		assertEquals("twenty one", w);
+		assertEquals("twenty-one", w);
 	}
 
 	/*
@@ -68,7 +68,7 @@ public class NumberToWordTest {
 		n = 123;
 		w = NumberToWord.getNumberAsWords(n);
 		
-		assertEquals("one hundred and twenty three", w);
+		assertEquals("one hundred and twenty-three", w);
 		
 		n = 500;
 		w = NumberToWord.getNumberAsWords(n);
@@ -89,7 +89,7 @@ public class NumberToWordTest {
 		n = 1042;
 		w = NumberToWord.getNumberAsWords(n);
 		
-		assertEquals("one thousand and forty two", w);
+		assertEquals("one thousand and forty-two", w);
 		
 		n = 1105;
 		w = NumberToWord.getNumberAsWords(n);
@@ -99,7 +99,7 @@ public class NumberToWordTest {
 		n = 566340;
 		w = NumberToWord.getNumberAsWords(n);
 		
-		assertEquals("five hundred and sixty six thousand three hundred and forty", w);
+		assertEquals("five hundred and sixty-six thousand three hundred and forty", w);
 		
 		n = 900000;
 		w = NumberToWord.getNumberAsWords(n);
@@ -120,12 +120,12 @@ public class NumberToWordTest {
 		int n = 56945781;
 		String w = NumberToWord.getNumberAsWords(n);
 		
-		assertEquals("fifty six million nine hundred and forty five thousand seven hundred and eighty one", w);
+		assertEquals("fifty-six million nine hundred and forty-five thousand seven hundred and eighty-one", w);
 		
 		n = 999999999;
 		w = NumberToWord.getNumberAsWords(n);
 		
-		assertEquals("nine hundred and ninety nine million nine hundred and ninety nine thousand nine hundred and ninety nine", w);
+		assertEquals("nine hundred and ninety-nine million nine hundred and ninety-nine thousand nine hundred and ninety-nine", w);
 		
 		n = 3000000;
 		w = NumberToWord.getNumberAsWords(n);
@@ -145,7 +145,7 @@ public class NumberToWordTest {
 		n = 3000033;
 		w = NumberToWord.getNumberAsWords(n);
 		
-		assertEquals("three million and thirty three", w);
+		assertEquals("three million and thirty-three", w);
 	}
 	
 	// ============================== Exceptions tests
