@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 
 public class NumberToWordTest {
 	
-	/*
+	/**
 	 * Tests conversion of 0 (zero) 
 	 */
 	@Test
@@ -20,7 +20,7 @@ public class NumberToWordTest {
 		assertEquals("zero", w);
 	}
 	
-	/*
+	/**
 	 * Tests conversion of simple small positive numbers (<20)
 	 */
 	@Test
@@ -31,7 +31,7 @@ public class NumberToWordTest {
 		assertEquals("one", w);
 	}
 	
-	/*
+	/**
 	 * Tests conversion of numbers greater or equal to 20, lower than 100
 	 * and with unit portion different than zero (e.g. 21, 75, 99)
 	 */
@@ -43,7 +43,7 @@ public class NumberToWordTest {
 		assertEquals("twenty-one", w);
 	}
 
-	/*
+	/**
 	 * Tests conversion of numbers greater or equal to 20, lower than 100
 	 * without a unit portion - i.e. a full ten number (e.g. 20, 30, 40, ..., 90)
 	 */
@@ -55,7 +55,7 @@ public class NumberToWordTest {
 		assertEquals("ninety", w);
 	}
 	
-	/*
+	/**
 	 * Tests conversion of hundreds
 	 */
 	@Test
@@ -76,7 +76,7 @@ public class NumberToWordTest {
 		assertEquals("five hundred", w);
 	}
 	
-	/*
+	/**
 	 * Test conversion of thousands
 	 */
 	@Test
@@ -112,7 +112,7 @@ public class NumberToWordTest {
 		assertEquals("nine hundred thousand and seven", w);
 	}
 	
-	/*
+	/**
 	 * Test conversion of millions
 	 */
 	@Test
@@ -148,9 +148,9 @@ public class NumberToWordTest {
 		assertEquals("three million and thirty-three", w);
 	}
 	
-	// ============================== Exceptions tests
+	/* ============================== Exceptions tests */
 	
-	/*
+	/**
 	 * Tests lack of support for negative numbers passed as input
 	 */
 	@Test(expected = UnsupportedNegativeNumberException.class)
@@ -161,7 +161,7 @@ public class NumberToWordTest {
 		assertEquals("negative forty", w);
 	}
 	
-	/*
+	/**
 	 * Tests lack of support for big numbers (greater than 999,999,999) passed as input
 	 */
 	@Test(expected = UnsupportedBigNumberException.class)

@@ -4,11 +4,23 @@ import java.util.ArrayList;
 
 import com.worldpay.numbers.exceptions.*;
 
+/**
+ * NumberToWord is the abstract class to convert integer numbers to
+ * their written form in English. It has been developed and presented
+ * as the technical challenge part for the assessment process for
+ * Sr. Java Developer at Worldpay UK.
+ * 
+ * @author Guilherme Cassolato, guilherme.cassolato@worldpay.com
+ * @version 1.0 (2016-03-21)
+ *
+ */
 public class NumberToWord {
 	
-	/*
-	 * Constant array to store the simple named numbers - i.e. the
-	 * units and other ones named by a single word under than twenty.
+	/**
+	 * Constant array to store the English names of the 20 single-word
+	 * named integer numbers, the one lower than twenty.
+	 * 
+	 * @see getSimpleNamedNumberAsWord
 	 */
 	private static final String[] SIMPLE_NAMED_NUMBERS = {
 		"zero",
@@ -33,18 +45,26 @@ public class NumberToWord {
 		"nineteen"
 	};
 	
-	/*
-	 * Getter method to obtain a "simple named number" as a word
-	 * from the corresponding constant array.
+	/**
+	 * Gets from the corresponding constant array the name of one of the
+	 * 20 single-word named integer numbers in English.
+	 * 
+	 * @param n  an integer number from 0 to 19
+	 * @return   the written form of the number n, in English
+	 * @see #SIMPLE_NAMED_NUMBERS
 	 */
 	private static String getSimpleNamedNumberAsWord(int n) {
 		return SIMPLE_NAMED_NUMBERS[n];
 	};
 	
-	/*
-	 * Constant array to store the names of the 8 tens greater or equal to 20.
-	 * Those are the tens whose numbers including a smaller portion within them
-	 * imply the compound words used to name numbers lower than 100, such as "twenty one"
+	/**
+	 * Constant array to store the English names of the 8 tens greater or equal to 20.
+	 * 
+	 * Those are the tens whose numbers that, when a smaller portion is included,
+	 * imply compound hyphenized words to name numbers then - i.e. the ones between 20
+	 * (inclusive) and 90 (inclusive), because 21 spells "twenty-one"
+	 * 
+	 * @see NumberToWord#getTensAsWord(int)
 	 */
 	private static final String[] TENS = {
 		"twenty",
@@ -57,38 +77,45 @@ public class NumberToWord {
 		"ninety"
 	};
 	
-	/*
-	 * Getter method to obtain the name of one of the 8 tens stored in the
-	 * corresponding constant array, either to convert a full ten number
-	 * (e.g. 20, 30, 60) or the ten part of a number which also includes a
-	 * units portion (e.g. 21, 73, 99).
+	/**
+	 * Gets the English name of one of the 8 tens stored in the corresponding constant
+	 * array, either to convert a full ten number (e.g. 20, 30, 60) or the ten
+	 * part of a number which also includes a units portion (e.g. 21, 73, 99).
+	 * 
+	 * @param n  an integer number from 0 to 7
+	 * @return   the written form of the (n+2)th ten, in English
+	 * @see #TENS
 	 */
 	private static String getTensAsWord(int n) {
 		return TENS[n-2];
 	};
 	
-	/*
+	/**
 	 * String constant for the humanized version of the word "and" (the separator)
 	 */
 	private static final String AND = "and";
 	
-	/*
+	/**
 	 * String constant for the humanized version of the word "hundred"
 	 */
 	private static final String HUNDRED = "hundred";
 	
-	/*
+	/**
 	 * String constant to the English word for thousands
 	 */
 	private static final String THOUSAND = "thousand";
 	
-	/*
+	/**
 	 * String constant to the English word for thousands
 	 */
 	private static final String MILLION = "million";
 	
-	/*
+	/**
 	 * Converts hundreds
+	 * 
+	 * @param n  an integer number from 0 to 999
+	 * @return   the written form of the number n, in English
+	 * @throws Exception
 	 */
 	private static String getHundredsAsWords(int n) throws Exception {
 		int hundreds = n / 100;
@@ -119,9 +146,15 @@ public class NumberToWord {
 		return String.join(" ", parts);
 	}
 	
-	/*
-	 * The main static method to convert any integer non-negative number from
-	 * 0 to 999,999,999 to its corresponding English name. 
+	/**
+	 * Converts any integer non-negative number from 0 to 999,999,999
+	 * to its corresponding English name.
+	 * 
+	 * This is the main class method of the library.
+	 * 
+	 * @param n  an integer number from 0 to 999,999,999
+	 * @return   the written form of the number n, in English.
+	 * @throws Exception
 	 */
 	public static String getNumberAsWords(int n) throws Exception {
 		if (n < 0) throw new UnsupportedNegativeNumberException();
