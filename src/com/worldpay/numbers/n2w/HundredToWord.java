@@ -2,10 +2,7 @@ package com.worldpay.numbers.n2w;
 
 import java.util.ArrayList;
 
-import com.worldpay.numbers.exceptions.UnsupportedBigNumberException;
-import com.worldpay.numbers.exceptions.UnsupportedNegativeNumberException;
-
-public class HundredToWord extends NumberToWord {
+public class HundredToWord extends ValidNumberToWord {
 
 	/**
 	 * Simple constructor for later assignment of the number
@@ -27,6 +24,22 @@ public class HundredToWord extends NumberToWord {
 	private final String HUNDRED = "hundred";
 	
 	/**
+	 * Gets the lower limit within which the class accepts a number to be converted
+	 * @return the lower limit within which the class accepts a number to be converted
+	 */
+	protected int getLowerLimit() {
+		return 0;
+	};
+	
+	/**
+	 * Gets the upper limit within which the class accepts a number to be converted
+	 * @return the upper limit within which the class accepts a number to be converted
+	 */
+	protected int getUpperLimit() {
+		return 999;
+	};
+	
+	/**
 	 * Converts an integer number from 0 to 999 (hundreds) to words
 	 * 
 	 * @return the written form of the number, in English
@@ -34,20 +47,8 @@ public class HundredToWord extends NumberToWord {
 	 * @see NumberToWord#number
 	 */
 	@Override
-	public String getNumberAsWords() throws Exception {
-		if (number < 0) {
-			throw new UnsupportedNegativeNumberException();
-		}
+	protected String getNumberAsWordsWithoutValidation() throws Exception {
 		
-		if (number > 999) {
-			throw new UnsupportedBigNumberException();
-		}
-		
-		if (number == 0) {
-			NumberToWord z = new UnitToWord(0); 
-			return z.getNumberAsWords();
-		}
-
 		int hundreds = number / 100;
 		int tensPortion = number % 100;
 		

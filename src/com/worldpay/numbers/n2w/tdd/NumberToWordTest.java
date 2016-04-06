@@ -174,7 +174,7 @@ public class NumberToWordTest {
 	/**
 	 * Tests lack of support for negative numbers passed as input
 	 */
-	@Test(expected = UnsupportedNegativeNumberException.class)
+	@Test(expected = UnsupportedSmallNumberException.class)
 	public void shouldThrowExceptionIfNegative() throws Exception {
 		NumberToWord n = new HundredToWord(-40);
 		String w = n.getNumberAsWords();

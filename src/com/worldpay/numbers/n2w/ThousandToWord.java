@@ -2,10 +2,7 @@ package com.worldpay.numbers.n2w;
 
 import java.util.ArrayList;
 
-import com.worldpay.numbers.exceptions.UnsupportedBigNumberException;
-import com.worldpay.numbers.exceptions.UnsupportedNegativeNumberException;
-
-public class ThousandToWord extends NumberToWord {
+public class ThousandToWord extends ValidNumberToWord {
 
 	/**
 	 * Simple constructor for later assignment of the number
@@ -27,6 +24,22 @@ public class ThousandToWord extends NumberToWord {
 	private final String THOUSAND = "thousand";
 	
 	/**
+	 * Gets the lower limit within which the class accepts a number to be converted
+	 * @return the lower limit within which the class accepts a number to be converted
+	 */
+	protected int getLowerLimit() {
+		return 0;
+	};
+	
+	/**
+	 * Gets the upper limit within which the class accepts a number to be converted
+	 * @return the upper limit within which the class accepts a number to be converted
+	 */
+	protected int getUpperLimit() {
+		return 999999;
+	};
+	
+	/**
 	 * Converts an integer number from 0 to 999,999 (thousands) to words
 	 * 
 	 * @return   the written form of the number, in English
@@ -34,19 +47,7 @@ public class ThousandToWord extends NumberToWord {
 	 * @throws Exception
 	 */
 	@Override
-	public String getNumberAsWords() throws Exception {
-		if (number < 0) {
-			throw new UnsupportedNegativeNumberException();
-		}
-		
-		if (number > 999999) {
-			throw new UnsupportedBigNumberException();
-		}
-		
-		if (number == 0) {
-			NumberToWord z = new UnitToWord(0); 
-			return z.getNumberAsWords();
-		}
+	protected String getNumberAsWordsWithoutValidation() throws Exception {
 		
 		int thousands = number / 1000;
 		int hundredsPortion = number % 1000;

@@ -2,10 +2,7 @@ package com.worldpay.numbers.n2w;
 
 import java.util.ArrayList;
 
-import com.worldpay.numbers.exceptions.UnsupportedBigNumberException;
-import com.worldpay.numbers.exceptions.UnsupportedNegativeNumberException;
-
-public class TenToWord extends NumberToWord {
+public class TenToWord extends ValidNumberToWord {
 
 	/**
 	 * Simple constructor for later assignment of the number
@@ -55,6 +52,22 @@ public class TenToWord extends NumberToWord {
 	};
 	
 	/**
+	 * Gets the lower limit within which the class accepts a number to be converted
+	 * @return the lower limit within which the class accepts a number to be converted
+	 */
+	protected int getLowerLimit() {
+		return 0;
+	};
+	
+	/**
+	 * Gets the upper limit within which the class accepts a number to be converted
+	 * @return the upper limit within which the class accepts a number to be converted
+	 */
+	protected int getUpperLimit() {
+		return 99;
+	};
+	
+	/**
 	 * String constant for the word separator sequence
 	 */
 	protected final String SEPARATOR = "-";
@@ -67,19 +80,7 @@ public class TenToWord extends NumberToWord {
 	 * @see NumberToWord#number
 	 */
 	@Override
-	public String getNumberAsWords() throws Exception {
-		if (number < 0) {
-			throw new UnsupportedNegativeNumberException();
-		}
-		
-		if (number > 99) {
-			throw new UnsupportedBigNumberException();
-		}
-		
-		if (number == 0) {
-			NumberToWord z = new UnitToWord(0); 
-			return z.getNumberAsWords();
-		}
+	protected String getNumberAsWordsWithoutValidation() throws Exception {
 
 		int tens = number / 10;
 		int unitsPortion;

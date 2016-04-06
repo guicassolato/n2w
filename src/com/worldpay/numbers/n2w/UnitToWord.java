@@ -1,9 +1,6 @@
 package com.worldpay.numbers.n2w;
 
-import com.worldpay.numbers.exceptions.UnsupportedBigNumberException;
-import com.worldpay.numbers.exceptions.UnsupportedNegativeNumberException;
-
-public class UnitToWord extends NumberToWord {
+public class UnitToWord extends ValidNumberToWord {
 	
 	/**
 	 * Simple constructor for later assignment of the number
@@ -49,7 +46,23 @@ public class UnitToWord extends NumberToWord {
 	};
 	
 	/**
-	 * Converts an integer number from 0 to 20 (single-word named integer
+	 * Gets the lower limit within which the class accepts a number to be converted
+	 * @return the lower limit within which the class accepts a number to be converted
+	 */
+	protected int getLowerLimit() {
+		return 0;
+	};
+	
+	/**
+	 * Gets the upper limit within which the class accepts a number to be converted
+	 * @return the upper limit within which the class accepts a number to be converted
+	 */
+	protected int getUpperLimit() {
+		return 19;
+	};
+	
+	/**
+	 * Converts an integer number from 0 to 19 (single-word named integer
 	 * numbers in English) to words
 	 * 
 	 * @return   the written form of the number, in English
@@ -58,15 +71,7 @@ public class UnitToWord extends NumberToWord {
 	 * @throws Exception 
 	 */
 	@Override
-	public String getNumberAsWords() throws Exception {
-		if (number < 0) {
-			throw new UnsupportedNegativeNumberException();
-		}
-		
-		if (number > 19) {
-			throw new UnsupportedBigNumberException();
-		}
-		
+	protected String getNumberAsWordsWithoutValidation() throws Exception {
 		return SIMPLE_NAMED_NUMBERS[number];
 	}
 

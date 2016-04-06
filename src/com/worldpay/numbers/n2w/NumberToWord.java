@@ -18,7 +18,7 @@ public abstract class NumberToWord {
 	protected int number;
 	
 	/**
-	 * Getter method for the number
+	 * Gets the number which is intended to be converted to words
 	 * 
 	 * @return the number set for later conversion to words
 	 */
@@ -27,7 +27,7 @@ public abstract class NumberToWord {
 	}
 
 	/**
-	 * Setter method to the n number
+	 * Sets the number which is intended to be later converted to words
 	 * 
 	 * @param number  an non-negative integer number which is intended to be converted to words later
 	 */
@@ -36,7 +36,7 @@ public abstract class NumberToWord {
 	}
 	
 	/**
-	 * Simple constructor for later assignment of the number
+	 * Simple constructor when later assignment of the number is desired
 	 */
 	public NumberToWord() {
 	}
@@ -57,14 +57,30 @@ public abstract class NumberToWord {
 	 * String constant for the word separator sequence
 	 */
 	protected final String SEPARATOR = " ";
+
+	/**
+	 * Converts to words any non-negative integer number within the limits of the class.
+	 * 
+	 * @return    the written form of the number, in English.
+	 * @see #setNumber(int)
+	 * @throws Exception
+	 */
+	public String getNumberAsWords() throws Exception {
+		if (number == 0) {
+			NumberToWord z = new UnitToWord(0); 
+			return z.getNumberAsWordsWithoutValidation();
+		}
+		
+		return this.getNumberAsWordsWithoutValidation();
+	};
 	
 	/**
-	 * Converts any integer non-negative number to words.
+	 * Converts any integer number to words without limit checking
 	 * 
 	 * @return    the written form of the number, in English.
 	 * @see #number
 	 * @throws Exception
 	 */
-	public abstract String getNumberAsWords() throws Exception;
+	protected abstract String getNumberAsWordsWithoutValidation() throws Exception;
 
 }
