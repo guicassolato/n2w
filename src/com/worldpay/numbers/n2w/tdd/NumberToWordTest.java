@@ -14,8 +14,8 @@ public class NumberToWordTest {
 	 */
 	@Test
 	public void shouldConvertZeroToWord() throws Exception {
-		int n = 0;
-		String w = NumberToWord.getNumberAsWords(n);
+		NumberToWord n = new NumberToWord(0);
+		String w = n.getNumberAsWords();
 		
 		assertEquals("zero", w);
 	}
@@ -25,8 +25,8 @@ public class NumberToWordTest {
 	 */
 	@Test
 	public void shouldConvertUnitsToWord() throws Exception {
-		int n = 1;
-		String w = NumberToWord.getNumberAsWords(n);
+		NumberToWord n = new NumberToWord(1);
+		String w = n.getNumberAsWords();
 		
 		assertEquals("one", w);
 	}
@@ -37,8 +37,8 @@ public class NumberToWordTest {
 	 */
 	@Test
 	public void shouldConvertTensAndUnitsToWords() throws Exception {
-		int n = 21;
-		String w = NumberToWord.getNumberAsWords(n);
+		NumberToWord n = new NumberToWord(21);
+		String w = n.getNumberAsWords();
 		
 		assertEquals("twenty-one", w);
 	}
@@ -49,8 +49,8 @@ public class NumberToWordTest {
 	 */
 	@Test
 	public void shouldConvertFullTensToWords() throws Exception {
-		int n = 90;
-		String w = NumberToWord.getNumberAsWords(n);
+		NumberToWord n = new NumberToWord(90);
+		String w = n.getNumberAsWords();
 		
 		assertEquals("ninety", w);
 	}
@@ -60,18 +60,21 @@ public class NumberToWordTest {
 	 */
 	@Test
 	public void shouldConvertHundredsToWords() throws Exception {
-		int n = 105;
-		String w = NumberToWord.getNumberAsWords(n);
+		NumberToWord n = new NumberToWord();
+		String w;
+
+		n.setNumber(105);
+		w = n.getNumberAsWords();
 		
 		assertEquals("one hundred and five", w);
 		
-		n = 123;
-		w = NumberToWord.getNumberAsWords(n);
+		n.setNumber(123);
+		w = n.getNumberAsWords();
 		
 		assertEquals("one hundred and twenty-three", w);
 		
-		n = 500;
-		w = NumberToWord.getNumberAsWords(n);
+		n.setNumber(500);
+		w = n.getNumberAsWords();
 		
 		assertEquals("five hundred", w);
 	}
@@ -81,33 +84,36 @@ public class NumberToWordTest {
 	 */
 	@Test
 	public void shouldConvertThousandsToWords() throws Exception {
-		int n = 1005;
-		String w = NumberToWord.getNumberAsWords(n);
+		NumberToWord n = new NumberToWord();
+		String w;
+
+		n.setNumber(1005);
+		w = n.getNumberAsWords();
 		
 		assertEquals("one thousand and five", w);
 		
-		n = 1042;
-		w = NumberToWord.getNumberAsWords(n);
+		n.setNumber(1042);
+		w = n.getNumberAsWords();
 		
 		assertEquals("one thousand and forty-two", w);
 		
-		n = 1105;
-		w = NumberToWord.getNumberAsWords(n);
+		n.setNumber(1105);
+		w = n.getNumberAsWords();
 		
 		assertEquals("one thousand one hundred and five", w);
 		
-		n = 566340;
-		w = NumberToWord.getNumberAsWords(n);
+		n.setNumber(566340);
+		w = n.getNumberAsWords();
 		
 		assertEquals("five hundred and sixty-six thousand three hundred and forty", w);
 		
-		n = 900000;
-		w = NumberToWord.getNumberAsWords(n);
+		n.setNumber(900000);
+		w = n.getNumberAsWords();
 		
 		assertEquals("nine hundred thousand", w);
 		
-		n = 900007;
-		w = NumberToWord.getNumberAsWords(n);
+		n.setNumber(900007);
+		w = n.getNumberAsWords();
 		
 		assertEquals("nine hundred thousand and seven", w);
 	}
@@ -117,35 +123,50 @@ public class NumberToWordTest {
 	 */
 	@Test
 	public void shouldConvertMillionsToWords() throws Exception {
-		int n = 56945781;
-		String w = NumberToWord.getNumberAsWords(n);
-		
+		NumberToWord n = new NumberToWord();
+		String w;
+
+		n.setNumber(56945781);
+		w = n.getNumberAsWords();
+
 		assertEquals("fifty-six million nine hundred and forty-five thousand seven hundred and eighty-one", w);
 		
-		n = 999999999;
-		w = NumberToWord.getNumberAsWords(n);
+		n.setNumber(999999999);
+		w = n.getNumberAsWords();
 		
 		assertEquals("nine hundred and ninety-nine million nine hundred and ninety-nine thousand nine hundred and ninety-nine", w);
 		
-		n = 3000000;
-		w = NumberToWord.getNumberAsWords(n);
+		n.setNumber(3000000);
+		w = n.getNumberAsWords();
 		
 		assertEquals("three million", w);
 
-		n = 3000004;
-		w = NumberToWord.getNumberAsWords(n);
+		n.setNumber(3000004);
+		w = n.getNumberAsWords();
 		
 		assertEquals("three million and four", w);
 		
-		n = 3000017;
-		w = NumberToWord.getNumberAsWords(n);
+		n.setNumber(3000017);
+		w = n.getNumberAsWords();
 		
 		assertEquals("three million and seventeen", w);
 		
-		n = 3000033;
-		w = NumberToWord.getNumberAsWords(n);
+		n.setNumber(3000033);
+		w = n.getNumberAsWords();
 		
 		assertEquals("three million and thirty-three", w);
+	}
+	
+	
+	/**
+	 * Tests conversion of a null number
+	 */
+	@Test
+	public void shoudThrowExceptionWhenNull() throws Exception {
+		NumberToWord n = new NumberToWord();
+		String w = n.getNumberAsWords();
+		
+		assertEquals("zero", w);
 	}
 	
 	/* ============================== Exceptions tests */
@@ -155,8 +176,8 @@ public class NumberToWordTest {
 	 */
 	@Test(expected = UnsupportedNegativeNumberException.class)
 	public void shouldThrowExceptionIfNegative() throws Exception {
-		int n = -40;
-		String w = NumberToWord.getNumberAsWords(n);
+		NumberToWord n = new NumberToWord(-40);
+		String w = n.getNumberAsWords();
 		
 		assertEquals("negative forty", w);
 	}
@@ -166,8 +187,8 @@ public class NumberToWordTest {
 	 */
 	@Test(expected = UnsupportedBigNumberException.class)
 	public void shouldThrowExceptionIfTooBig() throws Exception {
-		int n = 1200300400;
-		String w = NumberToWord.getNumberAsWords(n);
+		NumberToWord n = new NumberToWord(1200300400);
+		String w = n.getNumberAsWords();
 		
 		assertEquals("one billion two hundred million three hundred thousand four hundred", w);
 	}

@@ -17,12 +17,48 @@ import com.worldpay.numbers.exceptions.*;
 public class NumberToWord {
 	
 	/**
+	 * The number which is intended to be converted to words
+	 */
+	private int number;
+	
+	/**
+	 * Getter method for the number
+	 * 
+	 * @return the number set for later conversion to words
+	 */
+	public int getNumber() {
+		return number;
+	}
+
+	/**
+	 * Setter method to the n number
+	 * 
+	 * @param number  an non-negative integer number which is intended to be converted to words later
+	 */
+	public void setNumber(int number) {
+		this.number = number;
+	}
+	
+	/**
+	 * Simple constructor method
+	 */
+	public NumberToWord() {
+	}
+	
+	/**
+	 * Constructor method with variable initialization
+	 */
+	public NumberToWord(int number) {
+		setNumber(number);
+	}
+
+	/**
 	 * Constant array to store the English names of the 20 single-word
 	 * named integer numbers, the one lower than twenty.
 	 * 
 	 * @see getSimpleNamedNumberAsWord
 	 */
-	private static final String[] SIMPLE_NAMED_NUMBERS = {
+	private final String[] SIMPLE_NAMED_NUMBERS = {
 		"zero",
 		"one",
 		"two",
@@ -53,7 +89,7 @@ public class NumberToWord {
 	 * @return   the written form of the number n, in English
 	 * @see #SIMPLE_NAMED_NUMBERS
 	 */
-	private static String getSimpleNamedNumberAsWord(int n) {
+	private String getSimpleNamedNumberAsWord(int n) {
 		return SIMPLE_NAMED_NUMBERS[n];
 	};
 	
@@ -66,7 +102,7 @@ public class NumberToWord {
 	 * 
 	 * @see NumberToWord#getTensAsWord(int)
 	 */
-	private static final String[] TENS = {
+	private final String[] TENS = {
 		"twenty",
 		"thirty",
 		"forty",
@@ -86,29 +122,29 @@ public class NumberToWord {
 	 * @return   the written form of the (n+2)th ten, in English
 	 * @see #TENS
 	 */
-	private static String getTensAsWord(int n) {
+	private String getTensAsWord(int n) {
 		return TENS[n-2];
 	};
 	
 	/**
 	 * String constant for the humanized version of the word "and" (the separator)
 	 */
-	private static final String AND = "and";
+	private final String AND = "and";
 	
 	/**
 	 * String constant for the humanized version of the word "hundred"
 	 */
-	private static final String HUNDRED = "hundred";
+	private final String HUNDRED = "hundred";
 	
 	/**
 	 * String constant to the English word for thousands
 	 */
-	private static final String THOUSAND = "thousand";
+	private final String THOUSAND = "thousand";
 	
 	/**
 	 * String constant to the English word for thousands
 	 */
-	private static final String MILLION = "million";
+	private final String MILLION = "million";
 	
 	/**
 	 * Converts hundreds
@@ -117,7 +153,7 @@ public class NumberToWord {
 	 * @return   the written form of the number n, in English
 	 * @throws Exception
 	 */
-	private static String getHundredsAsWords(int n) throws Exception {
+	private String getHundredsAsWords(int n) throws Exception {
 		int hundreds = n / 100;
 		int tensPortion = n % 100;
 		
@@ -156,14 +192,14 @@ public class NumberToWord {
 	 * @return   the written form of the number n, in English.
 	 * @throws Exception
 	 */
-	public static String getNumberAsWords(int n) throws Exception {
-		if (n < 0) throw new UnsupportedNegativeNumberException();
-		if (n > 999999999) throw new UnsupportedBigNumberException();
+	public String getNumberAsWords() throws Exception {
+		if (number < 0) throw new UnsupportedNegativeNumberException();
+		if (number > 999999999) throw new UnsupportedBigNumberException();
 		
-		if (n == 0) return getSimpleNamedNumberAsWord(n);
+		if (number == 0) return getSimpleNamedNumberAsWord(number);
 		
-		int millions = n / 1000000;
-		int thousandsPortion = n % 1000000;
+		int millions = number / 1000000;
+		int thousandsPortion = number % 1000000;
 		
 		int thousands = thousandsPortion / 1000;
 		int hundredsPortion = thousandsPortion % 1000;
