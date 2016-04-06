@@ -147,6 +147,11 @@ public class NumberToWord {
 	private final String MILLION = "million";
 	
 	/**
+	 * String constant for the word separator sequence
+	 */
+	private final String SEPARATOR = " ";
+	
+	/**
 	 * Converts hundreds
 	 * 
 	 * @param n  an integer number from 0 to 999
@@ -182,7 +187,7 @@ public class NumberToWord {
 			}
 		}
 		
-		return String.join(" ", parts);
+		return String.join(SEPARATOR, parts);
 	}
 	
 	/**
@@ -236,7 +241,7 @@ public class NumberToWord {
 			parts.add(getHundredsAsWords(hundredsPortion));
 		}
 		
-		return String.join(" ", parts);
+		return String.join(SEPARATOR, parts);
 	}
 
 }
