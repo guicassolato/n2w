@@ -165,17 +165,20 @@ public class NumberToWord {
 		if (hundreds > 0) {
 			parts.add(getSimpleNamedNumberAsWord(hundreds));
 			parts.add(HUNDRED);
-			if (tensPortion > 0) parts.add(AND);
+			if (tensPortion > 0) {
+				parts.add(AND);
+			}
 		}
 		
 		if (tensPortion > 0) {
 			if (tensPortion < 20) {
 				parts.add(getSimpleNamedNumberAsWord(tensPortion));
 			} else {
-				if (units > 0)
+				if (units > 0) {
 					parts.add(String.format("%s-%s", getTensAsWord(tens), getSimpleNamedNumberAsWord(units)));
-				else
+				} else {
 					parts.add(getTensAsWord(tens));
+				}
 			}
 		}
 		
@@ -193,10 +196,17 @@ public class NumberToWord {
 	 * @throws Exception
 	 */
 	public String getNumberAsWords() throws Exception {
-		if (number < 0) throw new UnsupportedNegativeNumberException();
-		if (number > 999999999) throw new UnsupportedBigNumberException();
+		if (number < 0) {
+			throw new UnsupportedNegativeNumberException();
+		}
 		
-		if (number == 0) return getSimpleNamedNumberAsWord(number);
+		if (number > 999999999) {
+			throw new UnsupportedBigNumberException();
+		}
+		
+		if (number == 0) {
+			return getSimpleNamedNumberAsWord(number);
+		}
 		
 		int millions = number / 1000000;
 		int thousandsPortion = number % 1000000;
@@ -209,19 +219,22 @@ public class NumberToWord {
 		if (millions > 0) {
 			parts.add(getHundredsAsWords(millions));
 			parts.add(MILLION);
-			if (thousands == 0 && hundredsPortion > 0 && hundredsPortion < 100)
+			if (thousands == 0 && hundredsPortion > 0 && hundredsPortion < 100) {
 				parts.add(AND);
+			}
 		}
 		
 		if (thousands > 0) {
 			parts.add(getHundredsAsWords(thousands));
 			parts.add(THOUSAND);
-			if (hundredsPortion > 0 && hundredsPortion < 100)
+			if (hundredsPortion > 0 && hundredsPortion < 100) {
 				parts.add(AND);
+			}
 		}
 		
-		if (hundredsPortion > 0)
+		if (hundredsPortion > 0) {
 			parts.add(getHundredsAsWords(hundredsPortion));
+		}
 		
 		return String.join(" ", parts);
 	}
