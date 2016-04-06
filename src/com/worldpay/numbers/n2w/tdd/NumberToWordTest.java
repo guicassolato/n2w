@@ -2,7 +2,7 @@ package com.worldpay.numbers.n2w.tdd;
 
 import org.junit.Test;
 
-import com.worldpay.numbers.n2w.NumberToWord;
+import com.worldpay.numbers.n2w.*;
 import com.worldpay.numbers.exceptions.*;
 
 import static org.junit.Assert.*;
@@ -14,7 +14,7 @@ public class NumberToWordTest {
 	 */
 	@Test
 	public void shouldConvertZeroToWord() throws Exception {
-		NumberToWord n = new NumberToWord(0);
+		NumberToWord n = new UnitToWord(0);
 		String w = n.getNumberAsWords();
 		
 		assertEquals("zero", w);
@@ -25,7 +25,7 @@ public class NumberToWordTest {
 	 */
 	@Test
 	public void shouldConvertUnitsToWord() throws Exception {
-		NumberToWord n = new NumberToWord(1);
+		NumberToWord n = new UnitToWord(1);
 		String w = n.getNumberAsWords();
 		
 		assertEquals("one", w);
@@ -37,7 +37,7 @@ public class NumberToWordTest {
 	 */
 	@Test
 	public void shouldConvertTensAndUnitsToWords() throws Exception {
-		NumberToWord n = new NumberToWord(21);
+		NumberToWord n = new HundredToWord(21);
 		String w = n.getNumberAsWords();
 		
 		assertEquals("twenty-one", w);
@@ -49,7 +49,7 @@ public class NumberToWordTest {
 	 */
 	@Test
 	public void shouldConvertFullTensToWords() throws Exception {
-		NumberToWord n = new NumberToWord(90);
+		NumberToWord n = new HundredToWord(90);
 		String w = n.getNumberAsWords();
 		
 		assertEquals("ninety", w);
@@ -60,7 +60,7 @@ public class NumberToWordTest {
 	 */
 	@Test
 	public void shouldConvertHundredsToWords() throws Exception {
-		NumberToWord n = new NumberToWord();
+		NumberToWord n = new HundredToWord();
 		String w;
 
 		n.setNumber(105);
@@ -84,7 +84,7 @@ public class NumberToWordTest {
 	 */
 	@Test
 	public void shouldConvertThousandsToWords() throws Exception {
-		NumberToWord n = new NumberToWord();
+		NumberToWord n = new MillionToWord();
 		String w;
 
 		n.setNumber(1005);
@@ -123,7 +123,7 @@ public class NumberToWordTest {
 	 */
 	@Test
 	public void shouldConvertMillionsToWords() throws Exception {
-		NumberToWord n = new NumberToWord();
+		NumberToWord n = new MillionToWord();
 		String w;
 
 		n.setNumber(56945781);
@@ -163,7 +163,7 @@ public class NumberToWordTest {
 	 */
 	@Test
 	public void shoudThrowExceptionWhenNull() throws Exception {
-		NumberToWord n = new NumberToWord();
+		NumberToWord n = new MillionToWord();
 		String w = n.getNumberAsWords();
 		
 		assertEquals("zero", w);
@@ -176,7 +176,7 @@ public class NumberToWordTest {
 	 */
 	@Test(expected = UnsupportedNegativeNumberException.class)
 	public void shouldThrowExceptionIfNegative() throws Exception {
-		NumberToWord n = new NumberToWord(-40);
+		NumberToWord n = new HundredToWord(-40);
 		String w = n.getNumberAsWords();
 		
 		assertEquals("negative forty", w);
@@ -187,7 +187,7 @@ public class NumberToWordTest {
 	 */
 	@Test(expected = UnsupportedBigNumberException.class)
 	public void shouldThrowExceptionIfTooBig() throws Exception {
-		NumberToWord n = new NumberToWord(1200300400);
+		NumberToWord n = new MillionToWord(1200300400);
 		String w = n.getNumberAsWords();
 		
 		assertEquals("one billion two hundred million three hundred thousand four hundred", w);

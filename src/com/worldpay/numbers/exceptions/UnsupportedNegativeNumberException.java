@@ -8,7 +8,7 @@ public class UnsupportedNegativeNumberException extends UnsupportedInputExceptio
 	private static final long serialVersionUID = 1636691150195658090L;
 
 	public UnsupportedNegativeNumberException() {
-		super("Negative numbers are not supported");
+		super("Negative numbers are not supported.");
 	}
 
 }
