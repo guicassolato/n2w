@@ -1,16 +1,16 @@
 package com.worldpay.numbers.n2w;
 
-public class UnitToWord extends ValidNumberToWord {
+public class UnitToWord extends NumberToWord {
 	
-	/**
-	 * Simple constructor for later assignment of the number
+	/* (non-Javadoc)
+	 * @see NumberToWord#NumberToWord()
 	 */
 	public UnitToWord() {
 		super();
 	}
 
-	/**
-	 * Constructor method with variable initialization
+	/* (non-Javadoc)
+	 * @see NumberToWord#NumberToWord(int)
 	 */
 	public UnitToWord(int number) {
 		super(number);
@@ -22,7 +22,7 @@ public class UnitToWord extends ValidNumberToWord {
 	 * 
 	 * @see getNumberAsWords
 	 */
-	private final String[] SIMPLE_NAMED_NUMBERS = {
+	private final String[] SMALL_NUMBERS = {
 		"zero",
 		"one",
 		"two",
@@ -46,18 +46,29 @@ public class UnitToWord extends ValidNumberToWord {
 	};
 	
 	/**
-	 * Gets the lower limit within which the class accepts a number to be converted
-	 * @return the lower limit within which the class accepts a number to be converted
+	 * Gets the English name of one of the 8 tens stored in the corresponding constant
+	 * array, either to convert a full ten number (e.g. 20, 30, 60) or the ten
+	 * part of a number which also includes a units portion (e.g. 21, 73, 99).
+	 * 
+	 * @param n  an integer number from 0 to 7
+	 * @return   the written form of the (n+2)th ten, in English
+	 * @see #TENS
 	 */
-	protected int getLowerLimit() {
+	private String getUnitAsWord(int n) {
+		return SMALL_NUMBERS[n];
+	};
+	
+	/* (non-Javadoc)
+	 * @see ILimitedNumberToWord#getLowerLimit()
+	 */
+	public int getLowerLimit() {
 		return 0;
 	};
 	
-	/**
-	 * Gets the upper limit within which the class accepts a number to be converted
-	 * @return the upper limit within which the class accepts a number to be converted
+	/* (non-Javadoc)
+	 * @see ILimitedNumberToWord#getUpperLimit()
 	 */
-	protected int getUpperLimit() {
+	public int getUpperLimit() {
 		return 19;
 	};
 	
@@ -66,13 +77,12 @@ public class UnitToWord extends ValidNumberToWord {
 	 * numbers in English) to words
 	 * 
 	 * @return   the written form of the number, in English
-	 * @see NumberToWord#number
-	 * @see #SIMPLE_NAMED_NUMBERS
+	 * @see #SMALL_NUMBERS
 	 * @throws Exception 
 	 */
 	@Override
-	protected String getNumberAsWordsWithoutValidation() throws Exception {
-		return SIMPLE_NAMED_NUMBERS[number];
+	public String getNumberAsWords() throws Exception {
+		return getUnitAsWord(_number);
 	}
 
 }

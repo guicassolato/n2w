@@ -2,17 +2,17 @@ package com.worldpay.numbers.n2w;
 
 import java.util.ArrayList;
 
-public class HundredToWord extends ValidNumberToWord {
+public class HundredToWord extends DivisibleNumberToWord {
 
-	/**
-	 * Simple constructor for later assignment of the number
+	/* (non-Javadoc)
+	 * @see DivisibleNumberToWord#DivisibleNumberToWord()
 	 */
 	public HundredToWord() {
 		super();
 	}
 	
-	/**
-	 * Constructor method with variable initialization
+	/* (non-Javadoc)
+	 * @see DivisibleNumberToWord#DivisibleNumberToWord(int)
 	 */
 	public HundredToWord(int number) {
 		super(number);
@@ -23,54 +23,62 @@ public class HundredToWord extends ValidNumberToWord {
 	 */
 	private final String HUNDRED = "hundred";
 	
-	/**
-	 * Gets the lower limit within which the class accepts a number to be converted
-	 * @return the lower limit within which the class accepts a number to be converted
+	/* (non-Javadoc)
+	 * @see ILimitedNumberToWord#getLowerLimit()
 	 */
-	protected int getLowerLimit() {
+	public int getLowerLimit() {
 		return 0;
 	};
 	
-	/**
-	 * Gets the upper limit within which the class accepts a number to be converted
-	 * @return the upper limit within which the class accepts a number to be converted
+	/* (non-Javadoc)
+	 * @see ILimitedNumberToWord#getUpperLimit()
 	 */
-	protected int getUpperLimit() {
+	public int getUpperLimit() {
 		return 999;
 	};
 	
 	/**
-	 * Converts an integer number from 0 to 999 (hundreds) to words
-	 * 
-	 * @return the written form of the number, in English
-	 * @throws Exception
-	 * @see NumberToWord#number
+	 * Gets the divisor that separates the two parts of the hundred number which is
+	 * intended to be converted to words: the quotient, which represents full hundred
+	 * part; and the remainder, whose conversion is delegated to a lower level specific
+	 * instance class (TenToWord)
 	 */
-	@Override
-	protected String getNumberAsWordsWithoutValidation() throws Exception {
-		
-		int hundreds = number / 100;
-		int tensPortion = number % 100;
-		
+	protected int getDivisor() {
+		return 100;
+	};
+	
+	/**
+	 * Converts to words the quotient part of a division of the full number which is
+	 * intended to be converted by 100 (the specific divisor to convert a hundred
+	 * number to words)
+	 */
+	protected String getQuotientAsWords() throws Exception {
+		NumberToWord n = new UnitToWord(_quotient);
+
 		ArrayList<String> parts = new ArrayList<String>();
-		
-		// Quotient
-		if (hundreds > 0) {
-			NumberToWord h = new UnitToWord(hundreds); 
-			parts.add(h.getNumberAsWords());
-			parts.add(HUNDRED);
-			if (tensPortion > 0) {
-				parts.add(AND);
-			}
-		}
-		
-		// Remainder
-		if (tensPortion > 0) {
-			NumberToWord t = new TenToWord(tensPortion);
-			parts.add(t.getNumberAsWords());
-		}
+
+		parts.add(n.getNumberAsWords());
+		parts.add(HUNDRED);
 		
 		return String.join(SEPARATOR, parts);
+	}
+	
+	/**
+	 * Converts to words the remainder part of a division of the full number which is
+	 * intended to be converted by 100 (the specific divisor to convert a hundred
+	 * number to words)
+	 */
+	protected String getRemainderAsWords() throws Exception {
+		NumberToWord n = new TenToWord(_remainder);
+		return n.getNumberAsWords();
+	}
+
+	/* (non-Javadoc)
+	 * @see IConjunctionApplicable#requiresConjunction()
+	 */
+	@Override
+	public boolean requiresConjunction() {
+		return (_quotient > 0 && _remainder > 0);
 	}
 
 }

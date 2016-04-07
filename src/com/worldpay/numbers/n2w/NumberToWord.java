@@ -1,5 +1,9 @@
 package com.worldpay.numbers.n2w;
 
+import com.worldpay.numbers.exceptions.UnsupportedBigNumberException;
+import com.worldpay.numbers.exceptions.UnsupportedInputException;
+import com.worldpay.numbers.exceptions.UnsupportedSmallNumberException;
+
 /**
  * NumberToWord is the abstract class to convert integer numbers to
  * their written form in English. It has been developed and presented
@@ -10,12 +14,12 @@ package com.worldpay.numbers.n2w;
  * @version 1.1 (2016-04-06)
  *
  */
-public abstract class NumberToWord {
+public abstract class NumberToWord implements ILimitedNumberToWord {
 	
 	/**
 	 * The number which is intended to be converted to words
 	 */
-	protected int number;
+	protected int _number;
 	
 	/**
 	 * Gets the number which is intended to be converted to words
@@ -23,7 +27,7 @@ public abstract class NumberToWord {
 	 * @return the number set for later conversion to words
 	 */
 	public int getNumber() {
-		return number;
+		return _number;
 	}
 
 	/**
@@ -32,7 +36,7 @@ public abstract class NumberToWord {
 	 * @param number  an non-negative integer number which is intended to be converted to words later
 	 */
 	public void setNumber(int number) {
-		this.number = number;
+		this._number = number;
 	}
 	
 	/**
@@ -43,44 +47,86 @@ public abstract class NumberToWord {
 	
 	/**
 	 * Constructor method with variable initialization
+	 * 
+	 * @param number an integer number which is intended to be converted to words
 	 */
 	public NumberToWord(int number) {
 		setNumber(number);
 	}
-	
-	/**
-	 * String constant for the humanized version of the word "and" (the separator)
-	 */
-	protected final String AND = "and";
-	
+		
 	/**
 	 * String constant for the word separator sequence
 	 */
 	protected final String SEPARATOR = " ";
-
-	/**
-	 * Converts to words any non-negative integer number within the limits of the class.
-	 * 
-	 * @return    the written form of the number, in English.
-	 * @see #setNumber(int)
-	 * @throws Exception
+	
+	/* (non-Javadoc)
+	 * @see ILimitedNumberToWord#withinLowerLimit()
 	 */
-	public String getNumberAsWords() throws Exception {
-		if (number == 0) {
-			NumberToWord z = new UnitToWord(0); 
-			return z.getNumberAsWordsWithoutValidation();
+	@Override
+	public boolean withinLowerLimit() {
+		return (_number >= getLowerLimit());
+	}
+	
+	/* (non-Javadoc)
+	 * @see ILimitedNumberToWord#withinUpperLimit()
+	 */
+	@Override
+	public boolean withinUpperLimit() {
+		return (_number <= getUpperLimit());
+	}
+	
+	/* (non-Javadoc)
+	 * @see ILimitedNumberToWord#withinLimits()
+	 */
+	@Override
+	public boolean withinLimits() {
+		return (withinLowerLimit() && withinUpperLimit());
+	}
+	
+	/* (non-Javadoc)
+	 * @see ILimitedNumberToWord#checkLowerLimit()
+	 */
+	@Override
+	public void checkLowerLimit() throws UnsupportedSmallNumberException {
+		if (!withinLowerLimit()) {
+			throw new UnsupportedSmallNumberException(getLowerLimit());
 		}
-		
-		return this.getNumberAsWordsWithoutValidation();
+ 	}
+	
+	/* (non-Javadoc)
+	 * @see ILimitedNumberToWord#checkUpperLimit()
+	 */
+	@Override
+	public void checkUpperLimit() throws UnsupportedBigNumberException {
+		if (!withinUpperLimit()) {
+			throw new UnsupportedBigNumberException(getUpperLimit());
+		}
+ 	}
+	
+	/* (non-Javadoc)
+	 * @see ILimitedNumberToWord#checkLimits()
+	 */
+	@Override
+	public void checkLimits() throws UnsupportedInputException {
+		checkLowerLimit();
+		checkUpperLimit();
+ 	}
+	
+	/* (non-Javadoc)
+	 * @see ILimitedNumberToWord#getLimitedNumberAsWords()
+	 */
+	@Override
+	public String getLimitedNumberAsWords() throws Exception {
+		checkLimits();
+		return getNumberAsWords();
 	};
 	
 	/**
 	 * Converts any integer number to words without limit checking
 	 * 
 	 * @return    the written form of the number, in English.
-	 * @see #number
 	 * @throws Exception
 	 */
-	protected abstract String getNumberAsWordsWithoutValidation() throws Exception;
-
+	public abstract String getNumberAsWords() throws Exception;
+	
 }

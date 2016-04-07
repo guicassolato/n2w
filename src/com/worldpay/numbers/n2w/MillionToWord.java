@@ -2,17 +2,17 @@ package com.worldpay.numbers.n2w;
 
 import java.util.ArrayList;
 
-public class MillionToWord extends ValidNumberToWord {
+public class MillionToWord extends DivisibleNumberToWord {
 	
-	/**
-	 * Simple constructor for later assignment of the number
+	/* (non-Javadoc)
+	 * @see DivisibleNumberToWord#DivisibleNumberToWord()
 	 */
 	public MillionToWord() {
 		super();
 	}
 
-	/**
-	 * Constructor method with variable initialization
+	/* (non-Javadoc)
+	 * @see DivisibleNumberToWord#DivisibleNumberToWord(int)
 	 */
 	public MillionToWord(int number) {
 		super(number);
@@ -23,57 +23,65 @@ public class MillionToWord extends ValidNumberToWord {
 	 */
 	private final String MILLION = "million";
 	
-	/**
-	 * Gets the lower limit within which the class accepts a number to be converted
-	 * @return the lower limit within which the class accepts a number to be converted
+	/* (non-Javadoc)
+	 * @see ILimitedNumberToWord#getLowerLimit()
 	 */
-	protected int getLowerLimit() {
+	public int getLowerLimit() {
 		return 0;
 	};
 	
-	/**
-	 * Gets the upper limit within which the class accepts a number to be converted
-	 * @return the upper limit within which the class accepts a number to be converted
+	/* (non-Javadoc)
+	 * @see ILimitedNumberToWord#getUpperLimit()
 	 */
-	protected int getUpperLimit() {
+	public int getUpperLimit() {
 		return 999999999;
 	};
-
+	
 	/**
-	 * Converts an integer number from 0 to 999,999,999 (millions) to words
-	 * 
-	 * @return   the written form of the number, in English
-	 * @see NumberToWord#number
-	 * @throws Exception
+	 * Gets the divisor that separates the two parts of the million number which is
+	 * intended to be converted to words: the quotient, which represents full million
+	 * part; and the remainder, whose conversion is delegated to a lower level specific
+	 * instance class (ThousandToWord)
 	 */
-	@Override
-	protected String getNumberAsWordsWithoutValidation() throws Exception {
+	protected int getDivisor() {
+		return 1000000;
+	};
+	
+	/**
+	 * Converts to words the quotient part of a division of the full number which is
+	 * intended to be converted by 1,000,000 (the specific divisor to convert a million
+	 * number to words)
+	 */
+	protected String getQuotientAsWords() throws Exception {
+		NumberToWord n = new HundredToWord(_quotient);
 
-		int millions = number / 1000000;
-		int thousandsPortion = number % 1000000;
-		
-		int thousands = thousandsPortion / 1000;
-		int hundredsPortion = thousandsPortion % 1000;
-		
 		ArrayList<String> parts = new ArrayList<String>();
-		
-		// Quotient
-		if (millions > 0) {
-			NumberToWord m = new HundredToWord(millions);
-			parts.add(m.getNumberAsWords());
-			parts.add(MILLION);
-			if (thousands == 0 && hundredsPortion > 0 && hundredsPortion < 100) {
-				parts.add(AND);
-			}
-		}
-		
-		// Remainder
-		if (thousandsPortion > 0) {
-			NumberToWord t = new ThousandToWord(thousandsPortion);
-			parts.add(t.getNumberAsWords());
-		}
+
+		parts.add(n.getNumberAsWords());
+		parts.add(MILLION);
 		
 		return String.join(SEPARATOR, parts);
+	}
+	
+	/**
+	 * Converts to words the remainder part of a division of the full number which is
+	 * intended to be converted by 1,000,000 (the specific divisor to convert a million
+	 * number to words)
+	 */
+	protected String getRemainderAsWords() throws Exception {
+		NumberToWord n = new ThousandToWord(_remainder);
+		return n.getNumberAsWords();
+	}
+
+	/* (non-Javadoc)
+	 * @see IConjunctionApplicable#requiresConjunction()
+	 */
+	@Override
+	public boolean requiresConjunction() {
+		int thousands = _remainder / 1000;
+		int hundredsPortion = _remainder % 1000;
+		
+		return (_quotient > 0 && thousands == 0 && hundredsPortion > 0 && hundredsPortion < 100);
 	}
 
 }

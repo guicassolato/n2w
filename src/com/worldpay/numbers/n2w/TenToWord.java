@@ -2,17 +2,17 @@ package com.worldpay.numbers.n2w;
 
 import java.util.ArrayList;
 
-public class TenToWord extends ValidNumberToWord {
+public class TenToWord extends DivisibleNumberToWord {
 
-	/**
-	 * Simple constructor for later assignment of the number
+	/* (non-Javadoc)
+	 * @see DivisibleNumberToWord#DivisibleNumberToWord()
 	 */
 	public TenToWord() {
 		super();
 	}
 	
-	/**
-	 * Constructor method with variable initialization
+	/* (non-Javadoc)
+	 * @see DivisibleNumberToWord#DivisibleNumberToWord(int)
 	 */
 	public TenToWord(int number) {
 		super(number);
@@ -52,53 +52,78 @@ public class TenToWord extends ValidNumberToWord {
 	};
 	
 	/**
-	 * Gets the lower limit within which the class accepts a number to be converted
-	 * @return the lower limit within which the class accepts a number to be converted
+	 * String constant for the word separator sequence
 	 */
-	protected int getLowerLimit() {
+	protected final String SEPARATOR = "-";
+	
+	/* (non-Javadoc)
+	 * @see ILimitedNumberToWord#getLowerLimit()
+	 */
+	public int getLowerLimit() {
 		return 0;
 	};
 	
-	/**
-	 * Gets the upper limit within which the class accepts a number to be converted
-	 * @return the upper limit within which the class accepts a number to be converted
+	/* (non-Javadoc)
+	 * @see ILimitedNumberToWord#getUpperLimit()
 	 */
-	protected int getUpperLimit() {
+	public int getUpperLimit() {
 		return 99;
 	};
 	
 	/**
-	 * String constant for the word separator sequence
+	 * Gets the divisor that separates the two parts of the ten number which is
+	 * intended to be converted to words: the quotient, which represents full ten
+	 * part; and the remainder, whose conversion is delegated to a lower level specific
+	 * instance class (UnitToWord)
 	 */
-	protected final String SEPARATOR = "-";
+	protected int getDivisor() {
+		return 10;
+	};
+	
+	/**
+	 * Converts to words the quotient part of a division of the full number which is
+	 * intended to be converted by 10 (the specific divisor to convert a ten number
+	 * to words)
+	 */
+	protected String getQuotientAsWords() throws Exception {
+		return getTenAsWord(_quotient);
+	}
+	
+	/**
+	 * Converts to words the remainder part of a division of the full number which is
+	 * intended to be converted by 10 (the specific divisor to convert a ten number
+	 * to words)
+	 */
+	protected String getRemainderAsWords() throws Exception {
+		NumberToWord n = new UnitToWord(_remainder);
+		return n.getNumberAsWords();
+	}
 	
 	/**
 	 * Converts an integer number from 0 to 99 (tens) to words
 	 * 
 	 * @return the written form of the number, in English
+	 * @see #TENS
 	 * @throws Exception
-	 * @see NumberToWord#number
 	 */
 	@Override
-	protected String getNumberAsWordsWithoutValidation() throws Exception {
+	public String getNumberAsWords() throws Exception {
 
-		int tens = number / 10;
-		int unitsPortion;
+		_quotient = _number / getDivisor();
+		_remainder = _number % getDivisor();
 
 		ArrayList<String> parts = new ArrayList<String>();
 		
 		// Quotient
-		if (tens >= 2) {
-			parts.add(getTenAsWord(tens));
-			unitsPortion = number % 10;
+		if (_quotient >= 2) {
+			parts.add(getQuotientAsWords());
 		} else {
-			unitsPortion = number;
+			_remainder = _number;
 		}
 		
 		// Remainder
-		if (unitsPortion > 0) {
-			NumberToWord u = new UnitToWord(unitsPortion);
-			parts.add(u.getNumberAsWords());
+		if (_remainder > 0) {
+			parts.add(getRemainderAsWords());
 		}
 		
 		return String.join(SEPARATOR, parts);

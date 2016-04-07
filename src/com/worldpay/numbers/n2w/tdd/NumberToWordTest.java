@@ -14,14 +14,14 @@ public class NumberToWordTest {
 	 */
 	@Test
 	public void shouldConvertZeroToWord() throws Exception {
-		NumberToWord n = new UnitToWord(0);
+		NumberToWord n = new ZeroToWord();
 		String w = n.getNumberAsWords();
 		
 		assertEquals("zero", w);
 	}
 	
 	/**
-	 * Tests conversion of simple small positive numbers (<20)
+	 * Tests conversion of simple small positive numbers (&lt;20)
 	 */
 	@Test
 	public void shouldConvertUnitsToWord() throws Exception {
@@ -177,7 +177,7 @@ public class NumberToWordTest {
 	@Test(expected = UnsupportedSmallNumberException.class)
 	public void shouldThrowExceptionIfNegative() throws Exception {
 		NumberToWord n = new HundredToWord(-40);
-		String w = n.getNumberAsWords();
+		String w = n.getLimitedNumberAsWords();
 		
 		assertEquals("negative forty", w);
 	}
@@ -188,7 +188,7 @@ public class NumberToWordTest {
 	@Test(expected = UnsupportedBigNumberException.class)
 	public void shouldThrowExceptionIfTooBig() throws Exception {
 		NumberToWord n = new MillionToWord(1200300400);
-		String w = n.getNumberAsWords();
+		String w = n.getLimitedNumberAsWords();
 		
 		assertEquals("one billion two hundred million three hundred thousand four hundred", w);
 	}
